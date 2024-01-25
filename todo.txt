@@ -1,0 +1,37 @@
+- Router
+  - /products
+    - method GET
+      - return all products
+      - query 'select * from products'
+  - /cart
+    - method POST
+      - add product to cart
+        - product id, quantity
+      - query 'insert into cart'
+    - method GET
+      - return all products in cart
+      - query 'select * from cart'
+  - /cart/:id
+    - method DELETE
+      - delete product from cart by id
+      - query 'delete from cart where id = :id'
+  - /orders
+    - method POST
+      - checkout cart, barang di cart -> masuk ke order
+      - insert ke table order
+      - cart dikosongkan
+      - query 'insert into orders'
+      - query 'insert into order_items'
+      - query 'delete from cart'
+    - method GET
+      - return all orders
+      - query 'select * from orders'
+  - /orders/:id
+    - method GET
+      - return order by id
+      - query 'select * from orders where id = :id'
+- Table
+  - products
+  - cart
+  - orders
+  - order_items
