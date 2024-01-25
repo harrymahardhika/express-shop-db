@@ -1,6 +1,7 @@
 import express from 'express'
 import productRepository from './app/products.js'
 import cartRepository from './app/cart.js'
+import orderRepository from './app/order.js'
 
 const app = express()
 
@@ -58,6 +59,36 @@ app.delete('/cart', async (req, res) => {
   res.json({
     message: 'Cart emptied'
   })
+})
+
+app.post('/orders', async (req, res) => {
+  try {
+    await orderRepository.createOrder()
+
+    res.json({
+      message: 'Order created'
+    })
+  } catch (error) {
+    res.status(400).json({
+      error: error.message
+    })
+  }
+})
+
+app.get('/orders', async (req, res) => {
+  const orders = await orderRepository.get()
+  res.json(orders)
+})
+
+app.get('/orders/:id', async (req, res) => {
+  try {
+    const order = await orderRepository.find(req.params.id)
+    res.json(order)
+  } catch (error) {
+    res.status(400).json({
+      error: error.message
+    })
+  }
 })
 
 export default app
